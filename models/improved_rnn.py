@@ -33,7 +33,7 @@ class Improved_RNN(pl.LightningModule):
         # training_step defined the train loop.
         # It is independent of forward
         
-        predictions = self.forward(batch.text).squeeze(1)
+        predictions = self.forward(batch.text[0], batch.text[1]).squeeze(1)
         # print("SHAPE : ",predictions, batch.label)
         criterion = nn.BCEWithLogitsLoss()
         loss = criterion(predictions, batch.label)
@@ -44,7 +44,7 @@ class Improved_RNN(pl.LightningModule):
 
     def validation_step(self, batch, batch_idx):
         
-        predictions = self.forward(batch.text).squeeze(1)
+        predictions = self.forward(batch.text[0], batch.text[1]).squeeze(1)
         criterion = nn.BCEWithLogitsLoss()
         loss = criterion(predictions, batch.label)
         # Logging to TensorBoard by default
@@ -73,7 +73,7 @@ class Improved_RNN(pl.LightningModule):
         MAX_VOCAB_SIZE = 25_000
 
         # use GloVe pretrained embeddings
-        text.build_vocab(train_data, max_size = MAX_VOCAB_SIZE, vectors = "glove.6B.100d", unk_init = torch.Tensor.normal_)
+        text.build_vocab(train_data, max_size = MAX_VOCAB_SIZE, unk_init = torch.Tensor.normal_) #, vectors = "glove.6B.100d", unk_init = torch.Tensor.normal_)
         labels.build_vocab(train_data)
 
         train_iterator, valid_iterator, test_iterator = data.BucketIterator.splits(

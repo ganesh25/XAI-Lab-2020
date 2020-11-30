@@ -15,6 +15,7 @@ nlp = spacy.load('en')
 device = torch.device('cuda:5' if torch.cuda.is_available() else 'cpu')
 
 # load the previously saved model
+model = RNN()
 model.load_state_dict(torch.load("./models/model_imdb.pt"))
 model.eval()
 model = model.to(device)

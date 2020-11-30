@@ -14,8 +14,8 @@ nlp = spacy.load('en')
 
 
 torch.backends.cudnn.deterministic = True
-device='cpu'
-# device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+#device='cpu'
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 SEED = 0
 
@@ -67,6 +67,9 @@ model.create_model_ImprovedRNN(INPUT_DIM,
 # initialize <unk> and <pad> as zeros to explicitly tell our model that they are irrelevant for determining sentiment
 model.embedding.weight.data[UNK_IDX] = torch.zeros(EMBEDDING_DIM)
 model.embedding.weight.data[PAD_IDX] = torch.zeros(EMBEDDING_DIM)
+
+# use gpu
+model = model.to(device)
 
 
 

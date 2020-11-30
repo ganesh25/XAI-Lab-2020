@@ -39,6 +39,7 @@ class Improved_RNN(pl.LightningModule):
         loss = criterion(predictions, batch.label)
         # Logging to TensorBoard by default
         self.log('train_loss', loss)
+        print(f'Train Loss: {loss:.3f}')
         return loss
 
 
@@ -49,6 +50,7 @@ class Improved_RNN(pl.LightningModule):
         loss = criterion(predictions, batch.label)
         # Logging to TensorBoard by default
         self.log('val_loss', loss)
+        print(f'Val Loss: {loss:.3f}')
         return loss
 
 

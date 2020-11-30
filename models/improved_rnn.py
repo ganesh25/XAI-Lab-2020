@@ -73,7 +73,7 @@ class Improved_RNN(pl.LightningModule):
         MAX_VOCAB_SIZE = 25_000
 
         # use GloVe pretrained embeddings
-        text.build_vocab(train_data, max_size = MAX_VOCAB_SIZE, unk_init = torch.Tensor.normal_) #, vectors = "glove.6B.100d", unk_init = torch.Tensor.normal_)
+        text.build_vocab(train_data, max_size = MAX_VOCAB_SIZE) #, vectors = "glove.6B.100d", unk_init = torch.Tensor.normal_)
         labels.build_vocab(train_data)
 
         train_iterator, valid_iterator, test_iterator = data.BucketIterator.splits(

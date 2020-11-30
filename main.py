@@ -88,8 +88,8 @@ else:
     # most basic trainer, uses good defaults (auto-tensorboard, checkpoints, logs, and more)
     # trainer = pl.Trainer(gpus=8) (if you have GPUs)
     trainer = pl.Trainer(max_epochs=5, gpus=1)
-    trainer.fit(model,  train_iterator)
-    torch.save(model.state_dict(), ".models/model_imdb.pt")
+    trainer.fit(model, train_iterator)
+    torch.save(model.state_dict(), ".models/improved_model_imdb.pt")
 
 
 

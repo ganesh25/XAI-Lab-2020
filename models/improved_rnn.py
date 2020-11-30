@@ -100,3 +100,6 @@ class Improved_RNN(pl.LightningModule):
                            dropout=dropout)        
         self.fc = nn.Linear(hidden_dim * 2, output_dim)
         self.dropout = nn.Dropout(dropout)
+
+    #def val_dataloader(self):
+    #      return self.valid_iterator

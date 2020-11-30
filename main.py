@@ -62,7 +62,7 @@ model.create_model_ImprovedRNN(INPUT_DIM,
                                PAD_IDX) 
                                
 # replace the initial weights of the embedding layer with the pre-trained embeddings
-model.embedding.weight.data.copy_(pretrained_embeddings)
+#model.embedding.weight.data.copy_(pretrained_embeddings)
 
 # initialize <unk> and <pad> as zeros to explicitly tell our model that they are irrelevant for determining sentiment
 model.embedding.weight.data[UNK_IDX] = torch.zeros(EMBEDDING_DIM)

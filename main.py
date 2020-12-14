@@ -100,7 +100,7 @@ MAX_VOCAB_SIZE = 25000
 #loaded_vectors = torchtext.vocab.Vectors('C:/Users/Abhishek Saroha/Documents/GitHub/beyond-simple-word-level-input-relevance-explanations/data/glove.6B.50d.txt')
 #TEXT.build_vocab(train_data, vectors=loaded_vectors, max_size=len(loaded_vectors.stoi))
 #TEXT.build_vocab(train_data, max_size = MAX_VOCAB_SIZE, vectors = "glove.6B.100d", unk_init = torch.Tensor.normal_)
-TEXT.build_vocab(train_data, max_size = MAX_VOCAB_SIZE, unk_init = torch.Tensor.normal_)
+TEXT.build_vocab(train_data, max_size = MAX_VOCAB_SIZE)
 
  
 #TEXT.vocab.set_vectors(stoi=loaded_vectors.stoi, vectors=loaded_vectors.vectors, dim=loaded_vectors.dim)

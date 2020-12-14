@@ -39,7 +39,6 @@ class Improved_RNN(pl.LightningModule):
         loss = criterion(predictions, batch.label)
         # Logging to TensorBoard by default
         self.log('train_loss', loss)
-        print(f'Train Loss: {loss:.3f}')
         return loss
 
 
@@ -50,7 +49,6 @@ class Improved_RNN(pl.LightningModule):
         loss = criterion(predictions, batch.label)
         # Logging to TensorBoard by default
         self.log('val_loss', loss)
-        print(f'Val Loss: {loss:.3f}')
         return loss
 
 
@@ -75,7 +73,7 @@ class Improved_RNN(pl.LightningModule):
         MAX_VOCAB_SIZE = 25_000
 
         # use GloVe pretrained embeddings
-        text.build_vocab(train_data, max_size = MAX_VOCAB_SIZE) #, vectors = "glove.6B.100d", unk_init = torch.Tensor.normal_)
+        text.build_vocab(train_data, max_size = MAX_VOCAB_SIZE, vectors = "glove.6B.100d", unk_init = torch.Tensor.normal_)
         labels.build_vocab(train_data)
 
         train_iterator, valid_iterator, test_iterator = data.BucketIterator.splits(
@@ -100,6 +98,3 @@ class Improved_RNN(pl.LightningModule):
                            dropout=dropout)        
         self.fc = nn.Linear(hidden_dim * 2, output_dim)
         self.dropout = nn.Dropout(dropout)
-
-    #def val_dataloader(self):
-    #      return self.valid_iterator

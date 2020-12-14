@@ -86,7 +86,7 @@ class RNN(pl.LightningModule):
 
 
 
-class CNN(nn.Module):
+class CNN(pl.LightningModule):
     def __init__(self, vocab_size, embedding_dim, n_filters, filter_sizes, output_dim, 
                  dropout, pad_idx):
         
@@ -112,7 +112,8 @@ class CNN(nn.Module):
         #text = text.permute(1, 0)
                 
         #text = [batch size, sent len]
-        
+        text = torch.tensor(text, dtype=torch.long, device='cuda')
+        # text=text.to('cuda')
         embedded = self.embedding(text)
 
         #embedded = [batch size, sent len, emb dim]
@@ -134,3 +135,20 @@ class CNN(nn.Module):
         #cat = [batch size, n_filters * len(filter_sizes)]
             
         return self.fc(cat)
+
+    def training_step(self, batch, batch_idx):
+        # training_step defined the train loop.
+        # It is independent of forward
+        
+        predictions = self.forward(batch.text).squeeze(1)
+        # print("SHAPE : ",predictions, batch.label)
+        criterion = nn.BCEWithLogitsLoss()
+        # criterion = nn.BCELoss()
+        loss = criterion(predictions, batch.label)
+        # Logging to TensorBoard by default
+        self.log('train_loss', loss)
+        return loss
+
+    def configure_optimizers(self):
+        optimizer = torch.optim.Adam(self.parameters(), lr=1e-3)
+        return optimizer

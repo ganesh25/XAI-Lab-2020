@@ -97,9 +97,9 @@ train_data, test_data = datasets.IMDB.splits(TEXT, Label)
 train_data, valid_data = train_data.split()
 MAX_VOCAB_SIZE = 25000
 # If you prefer to use pre-downloaded glove vectors, you can load them with the following two command line
-loaded_vectors = torchtext.vocab.Vectors('C:/Users/Abhishek Saroha/Documents/GitHub/beyond-simple-word-level-input-relevance-explanations/data/glove.6B.50d.txt')
-TEXT.build_vocab(train_data, vectors=loaded_vectors, max_size=len(loaded_vectors.stoi))
-# TEXT.build_vocab(train_data, max_size = MAX_VOCAB_SIZE, vectors = "glove.6B.100d", unk_init = torch.Tensor.normal_)
+#loaded_vectors = torchtext.vocab.Vectors('C:/Users/Abhishek Saroha/Documents/GitHub/beyond-simple-word-level-input-relevance-explanations/data/glove.6B.50d.txt')
+#TEXT.build_vocab(train_data, vectors=loaded_vectors, max_size=len(loaded_vectors.stoi))
+TEXT.build_vocab(train_data, max_size = MAX_VOCAB_SIZE, vectors = "glove.6B.100d", unk_init = torch.Tensor.normal_)
  
 TEXT.vocab.set_vectors(stoi=loaded_vectors.stoi, vectors=loaded_vectors.vectors, dim=loaded_vectors.dim)
 Label.build_vocab(train_data)
@@ -127,10 +127,17 @@ model = CNN(INPUT_DIM, EMBEDDING_DIM, N_FILTERS, FILTER_SIZES, OUTPUT_DIM, DROPO
 root_words = root_generator()
 child_words = child_generator()
 
-trainer = pl.Trainer(max_epochs=5, gpus=1)
-trainer.fit(model, root_words)
-torch.save(model.state_dict(), "./models/model_cnn_self_imdb.pt")
+#trainer = pl.Trainer(max_epochs=5, gpus=1)
+#trainer.fit(model, train_iterator)
+#torch.save(model.state_dict(), "./models/model_cnn_self_imdb.pt")
 
-# model.load_state_dict(torch.load('models/imdb-model-cnn.pt'))
+model.load_state_dict(torch.load('models/imdb-model-cnn.pt'))
 model.eval()
+
+
+predict_sentiment_root =  model(root_words)
+
+print(predict_sentiment_root)
+
+
 model = model.to(device) 
